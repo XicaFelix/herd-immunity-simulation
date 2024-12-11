@@ -2,8 +2,6 @@ from datetime import datetime
 
 class Logger(object):
     def __init__(self, file_name):
-        # TODO:  Finish this initialization method. The file_name passed should be the
-        # full file name of the file that the logs will be written to.
         self.file_name = file_name
 
     # The methods below are just suggestions. You can rearrange these or 
@@ -24,16 +22,10 @@ class Logger(object):
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        repro_rate, initial_infected):
-        # TODO: Finish this method. This line of metadata should be tab-delimited
-        # it should create the text file that we will store all logs in.
-        # TIP: Use 'w' mode when you open the file. For all other methods, use
-        # the 'a' mode to append a new log to the end, since 'w' overwrites the file.
-        # NOTE: Make sure to end every line with a '/n' character to ensure that each
-        # event logged ends up on a separate line!
         current_date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
 
         meta_data = (
-            f'- - - - - - - {virus_name} Simulation - - - - -\n\n'
+            f'- - - - - - - {virus_name} Simulation - - - - - - - \n\n'
             f'Simulation Date: {current_date}\n'
             f'Virus: {virus_name}\n'
             f'Population Size: {pop_size}\n'
@@ -41,19 +33,15 @@ class Logger(object):
             f'Initial Infected Population: {initial_infected}\n'
             f'Mortality Rate: {mortality_rate}\n'
             f'Reproductive Rate: {repro_rate}\n'
-            f' - - - - - - - - - - - - - - - - - - - - - - -\n\n'
+            f' - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n'
         )
 
         with open(self.file_name, 'w') as file:
             file.write(meta_data)
 
     def log_interactions(self, step_number, number_of_interactions, number_of_new_infections):
-        # TODO: Finish this method. Think about how the booleans passed (or not passed)
-        # represent all the possible edge cases. Use the values passed along with each person,
-        # along with whether they are sick or vaccinated when they interact to determine
-        # exactly what happened in the interaction and create a String, and write to your logfile.
         interactions = (
-            f'- - - - - -  INTERACTIONS - STEP NUMBER {step_number} - - - - - - -\n'
+            f'- - - INTERACTIONS - STEP NUMBER {step_number} - - -\n'
             f'Number Interactions: {number_of_interactions}\n'
             f'New Infections: {number_of_new_infections}\n\n'
         )
@@ -63,11 +51,8 @@ class Logger(object):
 
 
     def log_infection_survival(self, step_number, population_count, number_of_new_fatalities):
-        # TODO: Finish this method. If the person survives, did_die_from_infection
-        # should be False.  Otherwise, did_die_from_infection should be True.
-        # Append the results of the infection to the logfile
         survival = (
-            f'- - - - - -  INFECTION SURVIVAL - STEP NUMBER {step_number} - - - -  - \n'
+            f'- - INFECTION SURVIVAL - STEP NUMBER {step_number} - -\n'
             f'Total Population: {population_count}\n'
             f'New Fatalities: {number_of_new_fatalities}\n\n'
         )
@@ -82,7 +67,7 @@ class Logger(object):
         '''
         adjusted_infected_and_alive = max(0, infected_and_alive)
         time_step = (
-            f'- - - - - - - - STEP NUMBER {step} - - - - - - - \n\n'
+            f'- - - - - - - - STEP NUMBER {step} - - - - - - - -\n\n'
             f'Infected: {adjusted_infected_and_alive}\n'
             f'Vaccinated or Immune: {pop_size - total_deaths - adjusted_infected_and_alive}\n'
             f'Total Deaths: {total_deaths}\n'
@@ -101,11 +86,11 @@ class Logger(object):
             simulation_end_reason = 'Entire population is either vaccinated or immune'
 
         summary = (
-            f'- - - - - - - SIMULATION OUTCOME - - - - - - - -\n\n'
+            f'- - - - - - - - SIMULATION OUTCOME - - - - - - - -\n\n'
             f'The simulation has ended after {simulation_time_step} iterations\n'
-            f'***************************************\n'
+            f'**************************************************\n'
             f'{simulation_end_reason}\n'
-            f'***************************************\n'
+            f'**************************************************\n'
             f'Initial Population: {pop_size}\n'
             f'Total Deaths: {total_deaths}\n'
             f'Surviving Population: {pop_size - total_deaths}\n'
