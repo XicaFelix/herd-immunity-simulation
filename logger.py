@@ -78,7 +78,7 @@ class Logger(object):
             file.write(time_step)
         
 
-    def log_simulation_outcome(self, simulation_time_step, pop_size, total_deaths):
+    def log_simulation_outcome(self, simulation_time_step, pop_size, total_deaths, saved_by_vax):
         simulation_end_reason = ''
         if pop_size == total_deaths:
             simulation_end_reason = 'Entire population is dead'
@@ -94,6 +94,7 @@ class Logger(object):
             f'Initial Population: {pop_size}\n'
             f'Total Deaths: {total_deaths}\n'
             f'Surviving Population: {pop_size - total_deaths}\n'
+            f'Interactions Saved by Vaccination: {saved_by_vax}\n'
             f'Calculated Mortality Rate: {total_deaths / pop_size}'
         )
 

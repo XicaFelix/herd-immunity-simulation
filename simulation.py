@@ -17,6 +17,7 @@ class Simulation(object):
         - logger: Logs all events during the simulation.
         """
         self.pop_size = pop_size  
+        self.saved_by_vaccination = 0
         self.next_person_id = 0  
         self.virus = virus  
         self.initial_infected = initial_infected  
@@ -100,7 +101,7 @@ class Simulation(object):
 
         # Log the final outcome of the simulation
         print('Log simulation completed')
-        self.logger.log_simulation_outcome(self.num_steps, self.pop_size, self.total_deaths)
+        self.logger.log_simulation_outcome(self.num_steps, self.pop_size, self.total_deaths, self.saved_by_vaccination)
 
     def time_step(self):
         """
@@ -140,6 +141,8 @@ class Simulation(object):
         have a chance to get infected based on the virus' reproduction rate.
         """
         if random_person.is_vaccinated or random_person.infection is not None:
+            if random_person.is_vaccinated:
+                self.saved_by_vaccination +=1
             return
         if random.random() < self.virus.repro_rate:
             if random_person._id not in self.newly_infected:
