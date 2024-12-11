@@ -23,23 +23,24 @@ class Logger(object):
     #   of vaccinated, and the number of steps to reach the end of the simulation. 
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
-                       repro_rate):
+                       repro_rate, initial_infected):
         # TODO: Finish this method. This line of metadata should be tab-delimited
         # it should create the text file that we will store all logs in.
         # TIP: Use 'w' mode when you open the file. For all other methods, use
         # the 'a' mode to append a new log to the end, since 'w' overwrites the file.
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        current_date = datetime.now().strftime("%m/%d/%Y")
+        current_date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
 
         meta_data = (
             f'- - - - - - - {virus_name} Simulation - - - - -\n'
-            f'Date: {current_date}'
+            f'Simulation Date: {current_date}'
             f'Virus: {virus_name}\n'
             f'Population Size: {pop_size}\n'
-            f'Initially Vaccinated: {vacc_percentage * 100}%\n'
+            f'Initial Vaccinated Population: {vacc_percentage * 100}%\n'
+            f'Initial Infected Population: {initial_infected}\n'
             f'Mortality Rate: {mortality_rate}\n'
-            f'Reproductive Rate: {repro_rate}\n\n'
+            f'Reproductive Rate: {repro_rate}\n'
             f' - - - - - - - - - - - - - - - - - - - - - - -\n'
         )
 
@@ -58,3 +59,18 @@ class Logger(object):
         # should be False.  Otherwise, did_die_from_infection should be True.
         # Append the results of the infection to the logfile
         pass
+
+    def log_simulation_outcome(self, simulation_time_step, pop_size, total_deaths, simulation_end_reason):
+        summary = (
+            f'- - - - - - - SIMULATION OUTCOME - - - - - - - -'
+            f'The simulation has ended after {simulation_time_step} iterations\n'
+            f'***************************************'
+            f'{simulation_end_reason}\n'
+            f'***************************************'
+            f'Initial Population: {pop_size}'
+            f'Total Deaths: {total_deaths}\n'
+            f'Surviving Population: {pop_size - total_deaths}'
+        )
+
+        with open(self.file_name, 'w') as file:
+            file.write(summary)

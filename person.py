@@ -70,19 +70,17 @@ if __name__ == "__main__":
     people = []
     for i in range(1, 100):
         # TODO Make a person with an infection
-            person = Person(i, False, virus)
+        person = Person(i, False, virus)
         # TODO Append the person to the people list
-            people.append(person)
+        people.append(person)
 
     # Now that you have a list of 100 people. Resolve whether the Person 
     # survives the infection or not by looping over the people list. 
-
     for person in people:
         # For each person call that person's did_survive_infection method
         survived = person.did_survive_infection()
 
     # Count the people that survived and did not survive: 
-   
     did_survived = 0
     did_not_survive = 0
 
@@ -90,8 +88,8 @@ if __name__ == "__main__":
     # TODO If a person is_alive True add one to did_survive
     # TODO If a person is_alive False add one to did_not_survive
     for person in people:
-        if person.did_survive_infection():
-            did_survived +=1
+        if person.is_alive:
+            did_survived += 1
         else:
             did_not_survive += 1
 
@@ -105,11 +103,25 @@ if __name__ == "__main__":
 
     # Stretch challenge! 
     # Check the infection rate of the virus by making a group of 
-    # unifected people. Loop over all of your people. 
+    # uninfected people. Loop over all of your people. 
     # Generate a random number. If that number is less than the 
     # infection rate of the virus that person is now infected. 
     # Assign the virus to that person's infection attribute. 
 
-    # Now count the infected and uninfect people from this group of people. 
-    # The number of infectedf people should be roughly the same as the 
+    infected_count = 0
+    uninfected_count = 0
+    for person in people:
+        infection_chance = random.random()
+        if infection_chance < virus.infection_rate:
+            person.infection = virus
+            infected_count += 1
+        else:
+            uninfected_count += 1
+
+    # Now count the infected and uninfected people from this group of people. 
+    # The number of infected people should be roughly the same as the 
     # infection rate of the virus.
+    print(f"Infected people: {infected_count}")
+    print(f"Uninfected people: {uninfected_count}")
+    print(f"Expected infection rate: {virus.infection_rate}")
+    print(f"Actual infection rate: {infected_count / len(people)}")
